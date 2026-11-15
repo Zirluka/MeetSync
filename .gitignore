@@ -1,0 +1,17 @@
+# ignore folders
+.agents
+.vscode
+AGENTS.md
+DESIGN.md
+CLAUDE.md
+skills-lock.json
+
+# env
+.env
+.env.backup
+.env.production
+
+# Docker volumes & local data
+*.log
+.DS_Store
+Thumbs.db

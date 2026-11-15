@@ -1,0 +1,67 @@
+services:
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: meetsync-postgres
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: "${DB_DATABASE:-meetsync}"
+      POSTGRES_USER: "${DB_USERNAME:-meetsync}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - meetsync-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-meetsync} -d ${DB_DATABASE:-meetsync}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: meetsync-redis
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - meetsync-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Mailpit - local mail server
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit-mailpit
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_MAILPIT_PORT:-1025}:1025"
+      - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+    volumes:
+      - mailpit_data:/data
+    networks:
+      - meetsync-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  mailpit_data:
+    driver: local
+
+networks:
+  meetsync-network:
+    driver: bridge

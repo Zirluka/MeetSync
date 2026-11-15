@@ -1,0 +1,9 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    # Уровень 8: строгая типизация, проверка аргументов, возвращаемых типов и null-safety
+    level: 8
