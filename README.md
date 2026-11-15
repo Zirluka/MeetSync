@@ -1,7 +1,7 @@
 # MeetSync — Сервис планирования встреч с подбором общего времени
 
 > **Курсовая работа**  
-> **Стек:** Laravel 11 (PHP 8.3+, Strict Types) + React 19 (Vite, TypeScript, Tailwind CSS, shadcn/ui) + PostgreSQL 16 + Redis  
+> **Стек:** Laravel 13 (PHP 8.3+, Strict Types) + React 19 (Vite, TypeScript, Tailwind CSS, shadcn/ui) + PostgreSQL 16 + Redis  
 > **Архитектура:** Decoupled REST API + SPA, Service-Repository Layer, Event-Driven Queues, Sweep-line Slot Algorithm.
 
 ---
@@ -41,7 +41,7 @@
 
 ### Backend:
 - **PHP 8.3+** с включённым strict_types
-- **Laravel 11** (REST API)
+- **Laravel 13** (REST API)
 - **PostgreSQL 16** (хранение интервалов, таймзон и статусов)
 - **Redis 7** (кэширование, сессии, очереди)
 - **Laravel Horizon** (панель мониторинга очередей)
@@ -69,7 +69,7 @@
 
 ```
 CourseWork/
-├── backend/                  # Laravel 11 API (PHP 8.3, Strict Types)
+├── backend/                  # Laravel 13 API (PHP 8.3, Strict Types)
 │   ├── AGENTS.md             # Инструкции для агентов по бэкенду
 │   ├── DESIGN.md             # Спецификация архитектуры бэкенда, БД и алгоритма
 │   └── ...
